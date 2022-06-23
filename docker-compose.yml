@@ -30,3 +30,30 @@ services:
       test: "ss --listening --tcp | grep -P 'LISTEN.+:smtp' || exit 1"
       timeout: 3s
       retries: 0
+
+  roundcubemail:
+    image: roundcube/roundcubemail:latest
+    environment:
+      - ROUNDCUBEMAIL_DEFAULT_HOST=mail.yourdomain.com # change this
+      - ROUNDCUBEMAIL_SMTP_SERVER=mail.yourdomain.com # change this
+
+  api:
+    image: spiksius/docker-mail-api:latest
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+    entrypoint: ["php", "/var/www/html/artisan","serve", "--host", "0.0.0.0", "--port", "80"]
+    environment:
+      - TOKEN=secrettokenchangeme # change this
+
+  caddy:
+    image: caddy/caddy:latest
+    volumes:
+      - ./Caddyfile/:/etc/caddy/Caddyfile
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - api
+      - roundcubemail
