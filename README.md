@@ -84,6 +84,7 @@ DMS_GITHUB_URL='https://raw.githubusercontent.com/docker-mailserver/docker-mails
 wget "${DMS_GITHUB_URL}/docker-compose.yml"
 wget "${DMS_GITHUB_URL}/mailserver.env"
 wget "${DMS_GITHUB_URL}/setup.sh"
+wget "${DMS_GITHUB_URL}/Caddyfile.example" -O Caddyfile 
 chmod a+x ./setup.sh
 ```
 
@@ -317,3 +318,26 @@ services:
       - NET_ADMIN
     restart: always
 ```
+
+
+
+## API
+
+### API urls
+
+Create email
+
+```
+curl "https://api.yourdomain.com/api/email/create?email=info@domain.com&password=somepassword&token=secrettokenchangeme"
+```
+
+Update email password
+
+```
+curl "https://api.yourdomain.com/api/email/update?email=info@domain.com&password=newsomepassword&token=secrettokenchangeme"
+```
+
+Delete email
+
+```
+curl "https://api.yourdomain.com/api/email/delete?email=info@domain.com&token=secrettokenchangeme"
