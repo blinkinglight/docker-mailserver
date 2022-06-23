@@ -1,4 +1,4 @@
-# Docker Mailserver
+# Docker Mailserver with RoundCube and HTTP API
 
 [![ci::status]][ci::github] [![docker::pulls]][docker::hub] [![documentation::badge]][documentation::web]
 
